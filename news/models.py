@@ -15,8 +15,6 @@ def upload_location(instance, filename, **kwargs):
     )
     return file_path
 
-class Tag(models.Model):
-    text = models.CharField(max_length=100, unique=True)
 
 class NewsModel(models.Model):
     title = models.CharField(max_length=50, null=False, blank=True)
@@ -25,7 +23,7 @@ class NewsModel(models.Model):
     date_published = models.DateTimeField(auto_now_add=True, verbose_name="date_published")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = models.SlugField(blank=True, unique=True)
-    tags = models.ManyToManyField(Tag, related_name='spot_facilities', null=True, blank=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title
