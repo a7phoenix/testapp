@@ -25,6 +25,9 @@ class NewsModel(models.Model):
     slug = models.SlugField(blank=True, unique=True)
     tags = TaggableManager()
 
+    def get_tags(self):
+        return self.tags.names()
+
     def __str__(self):
         return self.title
 

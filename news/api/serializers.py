@@ -1,8 +1,16 @@
 from rest_framework import serializers
-from news.models import NewsModel, TaggableManager
+from news.models import NewsModel
 
+class TagsField(serializers.Field):
+
+    def to_representation(self, value):
+        return value
+
+    def to_internal_value(self, data):
+        return data
 
 class NewsSerializer(serializers.ModelSerializer):
+    tags = TagsField(source="get_tags")
     class Meta:
         model = NewsModel
         fields = [
@@ -12,5 +20,5 @@ class NewsSerializer(serializers.ModelSerializer):
             'date_published',
             'slug',
             'author',
-            # 'tags',
+            'tags',
         ]
